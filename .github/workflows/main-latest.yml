@@ -3,6 +3,8 @@ name: master-latest
 on:
   push:
     branches: [ main ]
+  schedule:
+    - cron: '0 3 * * *' # Scheduled runs every day at 3am UTC
 
 jobs:
   docker:
@@ -47,7 +49,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest,ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ github.sha }}
+          tags: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest # for SHA: ,ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ github.sha }}
           labels: |
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.description=${{ github.event.repository.description }}
